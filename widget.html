@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoho CRM Web Tab Widget</title>
+    <script src="https://apis.zohocontent.com/crm/v2/JSClient/ZohoCRM.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            ZOHO.embeddedApp.on("PageLoad", function(data){
+                ZOHO.CRM.CONFIG.getCurrentUser().then(function(data){
+                    let user = data.users[0];
+                    document.getElementById('user-info').innerHTML = 
+                        `<h2>Current User Information</h2>
+                         <p>Name: ${user.full_name}</p>
+                         <p>Email: ${user.email}</p>`;
+                }).catch(function(error){
+                    console.error(error);
+                    document.getElementById('user-info').innerHTML = 
+                        `<h2>Error fetching user information </h2>`;
+                });
+            });
+
+            ZOHO.embeddedApp.init();
+        });
+    </script>
+</head>
+<body>
+    <div id="user-info">
+        <h2>Loading current user information.....</h2>
+    </div>
+</body>
+</html>
